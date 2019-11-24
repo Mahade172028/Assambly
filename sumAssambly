@@ -1,0 +1,50 @@
+.model small
+.stack 100h
+.data
+A db 6 dup(?) 
+sum dw 0
+.code
+main proc 
+     
+     mov ax,data
+     mov ds,ax
+     mov di,0 
+     mov bx,0 
+     mov cx,0
+     
+     Loop1: 
+      cmp di,6
+      je Loop2 
+      mov ah,1
+      int 21h
+      sub al,30h
+      mov A[di],al
+      add di,1
+      jmp Loop1
+      
+      Loop2:
+      cmp bx,6
+      je print
+      add cl,[bx+A]
+      ;int 21h 
+      add bx,1
+      jmp Loop2
+           
+           
+      print:
+           mov ah,2
+           ;mov cx,sum
+           mov dl,cl
+           add dl,30h
+           int 21h
+           jmp end    
+     
+    
+    
+    
+    
+    end:
+    mov ah,4ch
+    int 21h
+    main endp
+end main
